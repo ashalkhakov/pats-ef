@@ -8,8 +8,10 @@
 ","       { return ','; }
 \s+ {/*ignore*/}
 "->" { return "->"; }
-[0-9]+ { return 'INTEGER'; }
-[a-zA-Z_][a-zA-Z_0-9]*  { return 'IDENT'; }
+"=" { return "="; }
+"<" { return "<"; }
+[+-]?[0-9]+ { return 'INTEGER'; }
+[a-zA-Z_][a-zA-Z_0-9$]*  { return 'IDENT'; }
 [%&+-\\'./:=@~`^|*!$#?<>]+ { return 'SYMBOLICSEQ1'; }
 <<EOF>>   { return 'EOF'; }
 /lex
@@ -18,38 +20,43 @@
 %%
 
 file
-  : node EOF
-    { return $node; }
+  : expression EOF
+    { return $expression; }
   ;
 
-node
-  : ident '(' ')'
-    { $$ = [ 'ident', $ident ]; }
-  | ident '(' ident ')'
-    { $$ = [ 'ident2ident', $ident1, $ident2 ]; }
-  | ident '(' integer ')'
-    { $$ = [ 'ident2integer', $ident, $integer ]; }
-  | ident '(' symbolicident ')'
-    { $$ = [ 'ident2symbolic', $ident, $symbolicident ]; }
-  | ident '(' node ';' nodelst ')'
-    { $$ = [ 'app', $ident, [ $node, $nodelst ] ]; }
-  | ident '(' integer '->' node ')'
-    { $$ = [ 'mapsto', $integer, $node ]; }
+expression
+  : term  ',' expression { $$ = [$term,$expression]; }
+  | term { $$ = $term; }
   ;
-
-nodelst
-  : nodelst ',' node
-    { $$ = $nodelst; $$.unshift($node); }
-  | node
-    { $$ = [$node]; }
+term
+  : factor '->' term { $$ = ['->', $factor, $term]; }
+  | factor '=' term { $$ = ['=', $factor, $term]; }
+  | factor '<' term { $$ = ['<', $factor, $term]; }
+  | factor { $$ = $factor; }
   ;
-
-ident
-  : IDENT
-    { $$ = yytext; }
+factor
+  : '(' expression ')' { $$ = $expression; }
+  | number { $$ = $number; }
+  | var { $$ = $var; }
+  ;
+var
+  : ident '(' eseq ')' { $$ = ['app', $ident, $eseq]; }
+  | ident '(' ')' { $$ = ['app', $ident, []]; }
+  | ident { $$ = $ident; }
+  ;
+eseq
+  : eseq ';' expression { $$ = $eseq; $$.unshift($expression); }
+  | expression { $$ = [$expression]; }
+  ;
+number
+  : integer { $$ = $integer; }
   ;
 integer
   : INTEGER
+    { $$ = parseInt(yytext); }
+  ;
+ident
+  : IDENT
     { $$ = yytext; }
   ;
 symbolicident

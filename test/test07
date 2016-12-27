@@ -1,0 +1,3 @@
+/home/brand_000/ATS-Postiats-test/contrib/bbarker/PEULER/P2/P2-bbarker.dats: 1019(line=62, offs=7) -- 1064(line=62, offs=52): error(3): unsolved constraint: C3NSTRprop(main; S2Eeqeq(S2Eapp(S2Ecst(add_int_int); S2Evar(ln1(7703)), S2Evar(ln2(7702))); S2Evar(ln1(7703))))
+typechecking has failed: there are some unsolved constraints: please inspect the above reported error message(s) for information.
+exit(ATS): uncaught exception: _2home_2brand_000_2ATS_2dPostiats_2src_2pats_error_2esats__FatalErrorExn(1025)

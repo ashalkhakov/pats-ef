@@ -1,0 +1,4 @@
+/home/mike/cypress/workspace/USBFrameInOut/DATS/frames.dats: 6842(line=251, offs=51) -- 6868(line=251, offs=77): error(3): unsolved constraint: C3NSTRprop(C3TKmain(); S2Eapp(S2Ecst(<=); S2EVar(2574->S2Eapp(S2Ecst(add_int_int); S2Evar(i$4486$4487$4488$4491(8664)), S2Eintinf(1))), S2Eintinf(123)))
+/home/mike/cypress/workspace/USBFrameInOut/DATS/frames.dats: 6842(line=251, offs=51) -- 6868(line=251, offs=77): error(3): unsolved constraint for var preservation
+typechecking has failed: there are some unsolved constraints: please inspect the above reported error message(s) for information.
+exit(ATS): uncaught exception: _2home_2hwxi_2Research_2ATS_2dPostiats_2src_2pats_error_2esats__FatalErrorExn(1025)

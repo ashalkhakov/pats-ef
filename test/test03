@@ -1,0 +1,4 @@
+/home/kiwamu/tmp/hoge.dats: 11(line=1, offs=11) -- 48(line=1, offs=48): error(2): there is no suitable dynamic constant declared for [main0]. 
+TRANS2: there are [1] errors in total. 
+exit(ATS): uncaught exception: 
+_2home_2kiwamu_2src_2ATS_2dPostiats_2src_2pats_error_2esats__FatalErrorExn(1025) 

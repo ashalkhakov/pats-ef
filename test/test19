@@ -1,0 +1,5 @@
+/home/kiwamu/src/practice-ats/pointer_pointer/main.dats: 1127(line=42, 
+offs=14) -- 1142(line=42, offs=29): error(3): viewat-restoration 
+cannot be performed: mismatch of bef/aft locations of atviews: 
+bef: [S2Evar(i(8484))] 
+aft: [S2Evar(l_nxt$3149(8488))]

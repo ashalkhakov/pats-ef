@@ -1,0 +1,6 @@
+/home/kiwamu/src/practice-ats/pointer_chain/main.dats: 980(line=42, 
+offs=21) -- 1056(line=43, offs=47): error(3): mismatch of static terms 
+(tyleq): 
+The actual term is: S2Efun(FUN; lin=0; eff=S2EFFset(1); npf=-1; 
+S2Ecst(dentry_t_p); S2Ecst(int)) 
+The needed term is: S2Ecst(ptr_type) 

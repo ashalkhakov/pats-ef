@@ -5,7 +5,18 @@ function tryparsing(code) {
     }
     catch (e) { return e.message; }
 }
-      
+
+function check_re1(rexp) {
+    return function(line) {
+	var ere = rexp.exec(line);
+	if (ere) {
+	    var res = tryparsing(ere[2]);
+	    return {msgtext: ere[1], ast: res};
+	}
+	return null;
+    }
+}
+     
 function parseit() {
     var code = document.getElementById('source').value;
     console.log(code);
@@ -16,25 +27,72 @@ function parseit() {
     var lines_out = [];
 
     // message info
-    var msginfo = "/tmp/patsopt_ccats_ZuFD70: 358(line=29, offs=5) -- 360(line=29, offs=7): error(3): the void pattern is ill-typed.";
-    var re1 = /([^:]+): (\d+)\(line=(\d+), offs=(\d+)\) -- (\d+)\(line=(\d+), offs=(\d+)\): (error|warning)\((\d+)\): (.*)/;
-    var arr = re1.exec(msginfo);
-    // if arr is not null:
-    // arr[1]: filepath
-    // arr[2]: start offset
-    // arr[3]: start line
-    // arr[4]: start column
-    // arr[5]: end offset
-    // arr[6]: end line
-    // arr[7]: end column
-    // arr[8]: error/warning
-    // arr[9]: level
-    // arr[10]: message
+    var re0 = /([^:]+): (\d+)\(line=(\d+), offs=(\d+)\) -- (\d+)\(line=(\d+), offs=(\d+)\)(.*)/;
+    function make_loc(ere0) {
+	return {
+	    filepath: ere0[1],
+   	    beg_ofs: parseInt(ere0[2]),
+	    beg_lin: parseInt(ere0[3]),
+	    beg_col: parseInt(ere0[4]),
+	    end_ofs: parseInt(ere0[5]),
+	    end_lin: parseInt(ere0[6]),
+	    end_col: parseInt(ere0[7])
+	};
+    }
+    var re1 = /: (error|warning)\(([a-zA-Z0-9]+)\): (.*)/;
     
-    // The actual term is: ...
-    var re2 = /(The actual term is:) (.*)/;
-    // The needed term is: ...
-    var re3 = /(The needed term is:) (.*)/;
+    var re2 = check_re1(/(The actual term is:) (.*)/);
+    var re3 = check_re1(/(The needed term is:) (.*)/);
+    var re4 = check_re1(/(unsolved constraint for termination metric being decreasing:) (.*)/);
+
+    var re5 = function(line) {
+	var ere = /the form of dynamic expression \[([^\]]+)\] is unsupported for macro expansion/.exec(line);
+	if (ere) {
+	    var res = tryparsing(ere[1]);
+	    return {msgtext: ere[0], ast: res};
+	}
+	return null;
+    }
+    var re6 = function(line) {
+	var ere = /the expansion of the dynamic expression at \((.+)\) is expected to return code \(AST\) but it does not\./.exec(line);
+	if (ere) {
+	    var ere0 = re0.exec(ere[1]);
+	    var loc = make_loc(ere0);
+	    
+	    return {msgtext: ["the expansion of the dynamic expression at ", loc, " is expected to return code (AST) but it does not."]};
+	}
+	return null;
+    }
+    var re7 = function(line) {
+	var ere = /the constraint \[(.+)\] cannot be translated into a form accepted by the constraint solver\./.exec(line);
+	if (ere) {
+	    var expr = tryparsing(ere[1]);
+	    
+	    return {msgtext: ["the constraint ", expr, " cannot be translated into a form accepted by the constraint solver."]};
+	}
+	return null;
+    }
+    var re8 = check_re1(/(unsolved constraint:) (.*)/);
+    
+    function
+    attempt_filtering(frag) {
+	var match;
+
+	match = re2(frag);
+	if (match) { return match; }
+	match = re3(frag);
+	if (match) { return match; }
+	match = re4(frag);
+	if (match) { return match; }
+	match = re5(frag);
+	if (match) { return match; }
+	match = re6(frag);
+	if (match) { return match; }
+	match = re7(frag);
+	if (match) { return match; }
+	match = re8(frag);
+	if (match) { return match; }
+    }
 
     try {
         message.textContent = 'parsing...';
@@ -46,36 +104,27 @@ function parseit() {
 	{
 	    var line = lines[ln];
 
-	    var ere1 = re1.exec(line);
-	    if (ere1) {
-		var obj = {
-		    filepath: ere1[1],
-   		    beg_ofs: ere1[2],
-		    beg_lin: ere1[3],
-		    beg_col: ere1[4],
-		    end_ofs: ere1[5],
-		    end_lin: ere1[6],
-		    end_col: ere1[7],
-		    msgtype: ere1[8],
-		    msglevel: ere1[9],
-		    msgtext: ere1[10]
-		};
-		lines_out.push(obj);
-		continue;
-	    }
-	    var ere2 = re2.exec(line);
-	    if (ere2) {
-		var res = tryparsing(ere2[2]);
-		lines_out.push({msgtext: ere2[1], ast: res});
-		continue;
-	    }
-	    var ere3 = re3.exec(line);
-	    if (ere3) {
-    		var res = tryparsing(ere3[2]);
-		lines_out.push({msgtext: ere3[1], ast: res});
-		continue;
+	    var ere0 = re0.exec(line);
+	    if (ere0) {
+		var loc = make_loc(ere0);
+		var rest = ere0[8];
+		var ere1 = re1.exec(rest);
+		if (ere1) {
+		    var msgkind = ere1[1];
+		    var msglevel = ere1[2];
+
+		    rest = ere1[3];
+		    var rest_flt = attempt_filtering(rest);
+
+		    lines_out.push({loc: loc, kind: msgkind, level: msglevel, msgtext: rest_flt? rest_flt : rest});
+		    continue;
+		}
 	    }
 
+	    var flt = attempt_filtering(line);
+	    if (flt) {
+		lines_out.push(flt);
+	    }
 	    // unknown line... complain?
 	}
 

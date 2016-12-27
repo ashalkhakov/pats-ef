@@ -1,0 +1,5 @@
+/home/shlevy/src/elvysh-main/test2.dats: 593(line=17, offs=13) -- 608(line=17, offs=28): error(3): viewat-restoration cannot be performed: mismatch of bef/aft locations of atviews: 
+bef: [S2Evar(buf(3864))] 
+aft: [S2Eapp(S2Ecst(add_addr_int); S2Evar(buf$854(3872)), S2Evar(fill$852(3870)))] 
+patsopt(TRANS3): there are [1] errors in total. 
+exit(ATS): uncaught exception: _2home_2hwxi_2research_2Postiats_2git_2src_2pats_error_2esats__FatalErrorExn(1025) 

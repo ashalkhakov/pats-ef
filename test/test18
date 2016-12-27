@@ -1,0 +1,32 @@
+/home/kiwamu/src/linux-bohai-s2/metasepi/fs/DATS/statfs.dats: 
+1319(line=33, offs=38) -- 1460(line=39, offs=8): error(3): mismatch of 
+static terms (tyleq): 
+The actual term is: S2Eapp(S2Ecst(opt_vt0ype_bool_vt0ype); 
+S2Ecst(kstatfs_t), S2Eapp(S2Ecst(==); S2Evar(i$3302$3304(7381)), 
+S2Eintinf(0))) 
+The needed term is: S2Etyrec(fltext(struct kstatfs); npf=-1; 
+f_type=S2Etop(knd=0; S2Ecst(lint)), f_bsize=S2Etop(knd=0; 
+S2Ecst(lint)), f_blocks=S2Etop(knd=0; S2Ecst(uint64_t)), 
+f_bfree=S2Etop(knd=0; S2Ecst(uint64_t)), f_bavail=S2Etop(knd=0; 
+S2Ecst(uint64_t)), f_files=S2Etop(knd=0; S2Ecst(uint64_t)), 
+f_ffree=S2Etop(knd=0; S2Ecst(uint64_t)), f_fsid=S2Etop(knd=0; 
+S2Ecst(kernel_fsid_t)), f_namelen=S2Etop(knd=0; S2Ecst(lint)), 
+f_frsize=S2Etop(knd=0; S2Ecst(lint)), f_flags=S2Etop(knd=0; 
+S2Ecst(lint)), f_spare=S2Etop(knd=0; S2Etyarr(S2Ecst(lint); 
+S2Eintinf(4)))) 
+/home/kiwamu/src/linux-bohai-s2/metasepi/fs/DATS/statfs.dats: 
+1319(line=33, offs=38) -- 1460(line=39, offs=8): error(3): mismatch of 
+static terms (tyleq): 
+The actual term is: S2Eat(S2Eapp(S2Ecst(opt_vt0ype_bool_vt0ype); 
+S2Ecst(kstatfs_t), S2Eapp(S2Ecst(==); S2Evar(i$3302$3304(7381)), 
+S2Eintinf(0))); S2Evar(sbuf(7372))) 
+The needed term is: S2Eat(S2Etyrec(fltext(struct kstatfs); npf=-1; 
+f_type=S2Etop(knd=0; S2Ecst(lint)), f_bsize=S2Etop(knd=0; 
+S2Ecst(lint)), f_blocks=S2Etop(knd=0; S2Ecst(uint64_t)), 
+f_bfree=S2Etop(knd=0; S2Ecst(uint64_t)), f_bavail=S2Etop(knd=0; 
+S2Ecst(uint64_t)), f_files=S2Etop(knd=0; S2Ecst(uint64_t)), 
+f_ffree=S2Etop(knd=0; S2Ecst(uint64_t)), f_fsid=S2Etop(knd=0; 
+S2Ecst(kernel_fsid_t)), f_namelen=S2Etop(knd=0; S2Ecst(lint)), 
+f_frsize=S2Etop(knd=0; S2Ecst(lint)), f_flags=S2Etop(knd=0; 
+S2Ecst(lint)), f_spare=S2Etop(knd=0; S2Etyarr(S2Ecst(lint); 
+S2Eintinf(4)))); S2Evar(sbuf(7372)))

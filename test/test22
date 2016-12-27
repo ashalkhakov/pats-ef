@@ -1,0 +1,5 @@
+/home/kiwamu/src/practice-ats/atslf_palindrome/main.dats: 
+1905(line=72, offs=36) -- 1905(line=72, offs=36): error(3): unsolved 
+constraint for termination metric being decreasing: 
+C3NSTRprop(termet_isdec; S2Emetdec((S2EVar(23->S2Evar(l$858(4201)))) < 
+(S2Evar(l(4197)))))
