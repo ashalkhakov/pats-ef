@@ -7,12 +7,9 @@
 ";"       { return ';'; }
 ","       { return ','; }
 \s+ {/*ignore*/}
-"->" { return "->"; }
-"=" { return "="; }
-"<" { return "<"; }
 [+-]?[0-9]+ { return 'INTEGER'; }
 [a-zA-Z_][a-zA-Z_0-9$]*  { return 'IDENT'; }
-[%&+-\\'./:=@~`^|*!$#?<>]+ { return 'SYMBOLICSEQ1'; }
+[%&+\-\\\'\.//:=@~`^|*!$#?<>]+ { return 'SYMBOLICSEQ1'; }
 <<EOF>>   { return 'EOF'; }
 /lex
 
@@ -29,9 +26,7 @@ expression
   | term { $$ = $term; }
   ;
 term
-  : factor '->' term { $$ = ['->', $factor, $term]; }
-  | factor '=' term { $$ = ['=', $factor, $term]; }
-  | factor '<' term { $$ = ['<', $factor, $term]; }
+  : factor SYMBOLICSEQ1 term { $$ = [$SYMBOLICSEQ1, $factor, $term]; }
   | factor { $$ = $factor; }
   ;
 factor
@@ -43,9 +38,10 @@ var
   : ident '(' eseq ')' { $$ = ['app', $ident, $eseq]; }
   | ident '(' ')' { $$ = ['app', $ident, []]; }
   | ident { $$ = $ident; }
+  | symbolicident { $$ = $symbolicident; }
   ;
 eseq
-  : eseq ';' expression { $$ = $eseq; $$.unshift($expression); }
+  : eseq ';' expression { $$ = $eseq; $$.push($expression); }
   | expression { $$ = [$expression]; }
   ;
 number
