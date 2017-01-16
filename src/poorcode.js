@@ -1,3 +1,5 @@
+var pparser = require('./pparser.jison');
+
 function tryparsing(code) {
     try {
         var obj = pparser.parse(code);
