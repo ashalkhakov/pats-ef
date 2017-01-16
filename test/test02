@@ -1,0 +1,9 @@
+/home/admin/org/ats/lmacrodeftest.dats: 576(line=38, offs=12) -- 611(line=38, offs=47): error(mac): the form of dynamic expression [D2Esing(D2Eifhead(D2Emacfun(iscons; D2Evar(xs$3803(-1))); D2Emacsyn(MSKencode; D2Eseq(D2Eapplst(D2Esym(print); D2EXPARGdyn(-1; D2Emacsyn(MSKdecode; D2Emacfun(car; D2Evar(xs$3803(-1)))))), D2Emacsyn(MSKdecode; D2Eapplst(D2Emac(auxlist); D2EXPARGdyn(-1; D2Emacfun(cdr; D2Evar(xs$3803(-1))), D2Evar(y$3804(-1))))))); Some(D2Evar(y$3804(-1)))))] is unsupported for macro expansion.
+/home/admin/org/ats/lmacrodeftest.dats: 576(line=38, offs=12) -- 611(line=38, offs=47): error(mac): the expansion of the dynamic expression at (/home/admin/org/ats/lmacrodeftest.dats: 391(line=29, offs=3) -- 466(line=30, offs=60)) is expected to return code (AST) but it does not.
+/home/admin/org/ats/lmacrodeftest.dats: 571(line=38, offs=7) -- 573(line=38, offs=9): error(3): the void pattern is ill-typed.
+/home/admin/org/ats/lmacrodeftest.dats: 571(line=38, offs=7) -- 573(line=38, offs=9): error(3): mismatch of static terms (tyleq):
+The actual term is: S2Ecst(atsvoid_t0ype)
+The needed term is: S2Eerr()
+patsopt(TRANS3): there are [2] errors in total.
+exit(ATS): uncaught exception: _2home_2admin_2postiats_2src_2pats_error_2esats__FatalErrorExn(1025)
+

@@ -1,0 +1,6 @@
+mike: 4385(line=147, offs=36) -- 4406(line=147, offs=57): error(3): the dynamic expression cannot be assigned the type [S2Efun(FUN; lin=0; eff=S2EFFset(1); npf=-1; S2Ecst(hex_t), S2Ecst(hex_t); S2Ecst(uint8))].
+mike: 4385(line=147, offs=36) -- 4406(line=147, offs=57): error(3): mismatch of static terms (tyleq):
+The actual term is: S2Eapp(S2Ecst(g0uint_t0ype); S2Eextkind(atstype_uint8))
+The needed term is: S2Efun(FUN; lin=0; eff=S2EFFset(1); npf=-1; S2Ecst(hex_t), S2Ecst(hex_t); S2Ecst(uint8))
+patsopt(TRANS3): there are [1] errors in total.
+exit(ATS): uncaught exception: _2home_2hwxi_2Research_2ATS_2dPostiats_2src_2pats_error_2esats__FatalErrorExn(1025)

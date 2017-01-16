@@ -1,0 +1,4 @@
+/home/hwwu/GitHub/ats-parcc/parcc.dats: 7588(line=235, offs=13) -- 7636(line=235, offs=61): error(3): the symbol [show] cannot be resolved as no match is found.
+/home/hwwu/GitHub/ats-parcc/parcc.dats: 7674(line=237, offs=13) -- 7723(line=237, offs=62): error(3): the symbol [show] cannot be resolved as no match is found.
+/home/hwwu/GitHub/ats-parcc/parcc.dats: 7761(line=239, offs=13) -- 7808(line=239, offs=60): error(3): the symbol [show] cannot be resolved as no match is found.
+/home/hwwu/GitHub/ats-parcc/parcc.dats: 7846(line=241, offs=13) -- 7894(line=241, offs=61): error(3): the symbol [show] cannot be resolved as no match is found.

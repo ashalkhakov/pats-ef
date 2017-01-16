@@ -1,0 +1,10 @@
+/home/kiwamu/src/practice-ats/array_quicksort/main.dats: 374(line=15, 
+offs=34) -- 377(line=15, offs=37): error(3): the dynamic expression 
+cannot be assigned the type [S2Etyarr(S2Eapp(S2Ecst(INV); 
+S2Ecst(int)); S2EVar(4391))]. 
+/home/kiwamu/src/practice-ats/array_quicksort/main.dats: 374(line=15, 
+offs=34) -- 377(line=15, offs=37): error(3): mismatch of static terms 
+(tyleq): 
+The actual term is: S2Etop(knd=0; S2Eapp(S2Ecst(g0int_t0ype); 
+S2Eextkind(atstype_int))) 
+The needed term is: S2Eapp(S2Ecst(g0int_t0ype); S2Eextkind(atstype_int)) 

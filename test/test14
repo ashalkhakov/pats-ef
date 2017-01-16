@@ -1,0 +1,6 @@
+/home/mike/linti/linti-avr/DATS/main.dats: 3588(line=73, offs=27) -- 3590(line=73, offs=29): error(parsing): the syntactic entity [s0exp] is needed.
+/home/mike/linti/linti-avr/DATS/main.dats: 3586(line=73, offs=25) -- 3587(line=73, offs=26): error(parsing): the keyword ')' is needed.
+/home/mike/linti/linti-avr/DATS/main.dats: 3580(line=73, offs=19) -- 3581(line=73, offs=20): error(parsing): the keyword [,] is needed.
+/home/mike/linti/linti-avr/DATS/main.dats: 3564(line=73, offs=3) -- 3571(line=73, offs=10): error(parsing): the syntactic entity [d0exp] is needed.
+/home/mike/linti/linti-avr/DATS/main.dats: 3534(line=72, offs=1) -- 3540(line=72, offs=7): error(parsing): the token is discarded.
+exit(ATS): uncaught exception: _2home_2hwxi_2Research_2ATS_2dPostiats_2src_2pats_error_2esats__FatalErrorExn(1025)

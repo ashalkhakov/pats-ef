@@ -1,0 +1,6 @@
+/tmp/patsopt_ccats_ZuFD70: 358(line=29, offs=5) -- 360(line=29, offs=7): error(3): the void pattern is ill-typed.
+/tmp/patsopt_ccats_ZuFD70: 358(line=29, offs=5) -- 360(line=29, offs=7): error(3): mismatch of static terms (tyleq):
+The actual term is: S2Ecst(atsvoid_t0ype)
+The needed term is: S2Eapp(S2Ecst(g1int_int_t0ype); S2Eextkind(atstype_int), S2Eapp(S2Ecst(add_int_int); S2Eintinf(1), S2Eintinf(2)))
+patsopt(TRANS3): there are [1] errors in total.
+exit(ATS): uncaught exception: _2home_2hwxi_2Research_2ATS_2dPostiats_2src_2pats_error_2esats__FatalErrorExn(1025)

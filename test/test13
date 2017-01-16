@@ -1,0 +1,5 @@
+13378(line=450, offs=12) -- 13380(line=450, offs=14): error(3): unsolved constraint: C3NSTRprop(C3TKmain(); S2Eapp(S2Ecst(<=); S2Eintinf(0), S2EVar(2284->S2Eapp(S2Ecst(add_int_int); S2Evar(i$3823$3824$3825$3828(7996)), S2Eintinf(1)))))
+/home/mike/linti/linti-avr/DATS/frames.dats: 13378(line=450, offs=12) -- 13380(line=450, offs=14): error(3): unsolved constraint for var preservation
+/home/mike/linti/linti-avr/DATS/frames.dats: 14535(line=471, offs=12) -- 14537(line=471, offs=14): error(3): unsolved constraint for var preservation
+typechecking has failed: there are some unsolved constraints: please inspect the above reported error message(s) for information.
+exit(ATS): uncaught exception: _2home_2hwxi_2Research_2ATS_2dPostiats_2src_2pats_error_2esats__FatalErrorExn(1025)

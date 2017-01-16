@@ -1,0 +1,6 @@
+/home/kiwamu/src/practice-ats/gfarray_mergesort/main.dats: 2081(line=75, offs=25) -- 2090(line=75, offs=34): warning(3): the constraint [S2Eeqeq(S2Evar(xs2$7477$7478$7479(13377)); S2Evar(xs1$7465$7467$7469(13367)))] cannot be translated into a form accepted by the constraint solver.
+/home/kiwamu/src/practice-ats/gfarray_mergesort/main.dats: 
+2081(line=75, offs=25) -- 2090(line=75, offs=34): error(3): unsolved 
+constraint: C3NSTRprop(C3TKmain(); 
+S2Eeqeq(S2Evar(xs2$7477$7478$7479(13377)); 
+S2Evar(xs1$7465$7467$7469(13367))))

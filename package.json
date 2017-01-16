@@ -1,0 +1,35 @@
+{
+  "name": "pats-ef",
+  "version": "1.0.0",
+  "description": "Error filtering for ATS/Postiats messages",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "build": "webpack",
+    "start": "webpack --config webpack.config.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ashalkhakov/pats-ef.git"
+  },
+  "keywords": [
+    "ATS",
+    "Postiats",
+    "error",
+    "filtering"
+  ],
+  "author": "Artyom Shalkhakov",
+  "license": "BSD-3-Clause",
+  "bugs": {
+    "url": "https://github.com/ashalkhakov/pats-ef/issues"
+  },
+  "homepage": "https://github.com/ashalkhakov/pats-ef#readme",
+  "devDependencies": {
+    "jison": "^0.4.17",
+    "jison-loader": "github:ashalkhakov/jison-loader",
+    "skeleton-loader": "0.0.5",
+    "webpack": "^2.2.0-rc.6"
+  }
+}
