@@ -1,10 +1,13 @@
 var path = require('path');
 const webpack = require('webpack');
 
+var BUILD_DIR = path.resolve(__dirname, 'dist');
+var APP_DIR = path.resolve(__dirname, 'src');
+
 const config = {
-  entry: './src/poorcode.js',
+  entry: APP_DIR + '/index.jsx',
   output: {
-    path: path.resolve(__dirname, 'dist'),
+    path: BUILD_DIR,
     filename: 'bundle.js'
   },
   node: {
@@ -14,12 +17,13 @@ const config = {
     rules: [
       {test: /\.jison$/, use: [{
         loader: 'jison-loader'
-      }]}
+      }]},
+      {test: /\.jsx?/, include: APP_DIR, use: 'babel-loader'}
     ]
   },
   resolve: {
     modules: [
-      path.join(__dirname, "src"),
+      APP_DIR,
       "node_modules"
     ]
   }
