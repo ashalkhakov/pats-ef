@@ -22,23 +22,27 @@ file
   ;
 
 expression
-  : term  ',' expression { $$ = [$term,$expression]; }
+  : term  ',' expression {
+      $$ =
+         $expression.type && $expression.type == 'ArrayExpression'
+          ? $expression.elements.unshift($term) : {type: 'ArrayExpression', elements: [$term, $expression]}
+    }
   | term { $$ = $term; }
   ;
 term
-  : factor SYMBOLICSEQ1 term { $$ = [$SYMBOLICSEQ1, $factor, $term]; }
+  : factor SYMBOLICSEQ1 term { $$ = {type: 'BinaryExpression', operator: $SYMBOLICSEQ1, left: $factor, right: $term}; }
   | factor { $$ = $factor; }
   ;
 factor
   : '(' expression ')' { $$ = $expression; }
-  | number { $$ = $number; }
+  | number { $$ = {type: 'NumericLiteral', value: $number }; }
   | var { $$ = $var; }
   ;
 var
-  : ident '(' eseq ')' { $$ = ['app', $ident, $eseq]; }
-  | ident '(' ')' { $$ = ['app', $ident, []]; }
-  | ident { $$ = $ident; }
-  | symbolicident { $$ = $symbolicident; }
+  : ident '(' eseq ')' { $$ = {type: 'CallExpression', callee: { type: 'Identifier', name: $ident }, arguments: $eseq }; }
+  | ident '(' ')' { $$ = {type: 'CallExpression', callee: { type: 'Identifier', name: $ident }, arguments: [] }; }
+  | ident { $$ = {type: 'Identifier', name: $ident }; }
+  | symbolicident { $$ = {type: 'Identifier', name: $symbolicident }; }
   ;
 eseq
   : eseq ';' expression { $$ = $eseq; $$.push($expression); }
