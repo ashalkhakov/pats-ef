@@ -25,8 +25,7 @@ const config = {
       {test: /\.jsx?/, include: APP_DIR, use: 'babel-loader'},
       {test: /\.css$/, include: APP_DIR,
        loader: ExtractTextPlugin.extract({fallbackLoader: 'style-loader', loader: 'css-loader?sourceMap',
-                                          publicPath: '../'})},
-//       /*use: ['style-loader', 'css-loader']*/},
+                                          publicPath: '../'})}
     ]
   },
   resolve: {

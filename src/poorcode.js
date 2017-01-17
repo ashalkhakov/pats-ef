@@ -13,7 +13,7 @@ function check_re1(rexp) {
     var ere = rexp.exec(line);
     if (ere) {
       var res = tryparsing(ere[2]);
-      return {msgtext: ere[1], ast: res};
+      return [{type: 'Text', message: ere[1]}, {type: 'AST', children: res}];
     }
     return null;
   }
@@ -47,7 +47,11 @@ function parseit(code) {
     var ere = /the form of dynamic expression \[([^\]]+)\] is unsupported for macro expansion/.exec(line);
     if (ere) {
       var res = tryparsing(ere[1]);
-      return {msgtext: ere[0], ast: res};
+      return [
+        {type: 'Text', message: 'the form of dynamic expression'},
+        {type: 'AST', children: res},
+        {type: 'Text', message: 'is unsupported for macro expansion'}
+      ];
     }
     return null;
   }
@@ -57,7 +61,11 @@ function parseit(code) {
       var ere0 = re0.exec(ere[1]);
       var loc = make_loc(ere0);
       
-      return {msgtext: ["the expansion of the dynamic expression at ", loc, " is expected to return code (AST) but it does not."]};
+      return [
+        {type: 'Text', message: "the expansion of the dynamic expression at "},
+        {type: 'Location', loc: loc},
+        {type: 'Text', message: " is expected to return code (AST) but it does not."}
+      ];
     }
     return null;
   }
@@ -66,11 +74,16 @@ function parseit(code) {
     if (ere) {
       var expr = tryparsing(ere[1]);
 	    
-      return {msgtext: ["the constraint ", expr, " cannot be translated into a form accepted by the constraint solver."]};
+      return [
+        {type: 'Text', message: "the constraint "},
+        {type: 'AST', children: expr},
+        {type: 'Text', message: " cannot be translated into a form accepted by the constraint solver."}
+      ];
     }
     return null;
   }
   var re8 = check_re1(/(unsolved constraint:) (.*)/);
+  var re9 = check_re1(/(the dynamic expression cannot be assigned the type) \[(.+)\]/);
   
   function
   attempt_filtering(frag) {
@@ -89,6 +102,8 @@ function parseit(code) {
     match = re7(frag);
     if (match) { return match; }
     match = re8(frag);
+    if (match) { return match; }
+    match = re9(frag);
     if (match) { return match; }
   }
 
@@ -112,24 +127,30 @@ function parseit(code) {
 	  rest = ere1[3];
 	  var rest_flt = attempt_filtering(rest);
 
-	  lines_out.push({loc: loc, kind: msgkind, level: msglevel, msgtext: rest_flt? rest_flt : rest});
+	  lines_out.push({type: 'Location', loc: loc, level: msglevel, kind: msgkind});
+          if (rest_flt) {
+            lines_out.push.apply(lines_out, rest_flt); // rest_flt is an array, concat!
+          }
+          else {
+            lines_out.push({type: 'Text', message: rest});
+          }
 	  continue;
 	}
       }
 
       var flt = attempt_filtering(line);
       if (flt) {
-	lines_out.push(flt);
+        lines_out.push.apply(lines_out, flt); // flt is an array, concat!
       }
       else {
         // unknown line... complain?
-        lines_out.push(line);
+        lines_out.push({type: 'Text', message: line});
       }
     }
     return lines_out;
   }
   catch (e) {
-    return [{type: 'exception', message: e.message}];
+    return [{type: 'Exception', message: e.message}];
   }
 }
 

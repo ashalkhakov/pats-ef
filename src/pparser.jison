@@ -22,7 +22,11 @@ file
   ;
 
 expression
-  : term  ',' expression { $$ = {type: 'BinaryExpression', operator: ',', left: $term, right: $expression}; }
+  : term  ',' expression {
+      $$ =
+         $expression.type && $expression.type == 'ArrayExpression'
+          ? $expression.elements.unshift($term) : {type: 'ArrayExpression', elements: [$term, $expression]}
+    }
   | term { $$ = $term; }
   ;
 term
