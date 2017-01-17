@@ -20,7 +20,8 @@ git remote add upstream "https://$GH_TOKEN@github.com/ashalkhakov/pats-ef.git"
 git fetch upstream
 git reset upstream/gh-pages
 
-touch .
+# node.js package 'touch' interferes with this...
+/bin/touch .
 
 echo Committing to GH Pages
 
