@@ -1,6 +1,53 @@
 import React from 'react';
 import {render} from 'react-dom';
-import poorcode from './poorcode.js'
+import poorcode from './poorcode.js';
+
+import css from './tree.css';
+
+function ast2json(root) {
+  var id = 0;
+  function get_id() {
+    return id++;
+  }
+
+  function map_r(node) {
+    switch (node.type) {
+    case 'NumericLiteral': // value
+      return {id: get_id(), name: node.value.toString()};
+    case 'Identifier': // name
+      return {id: get_id(), name: node.name};
+    case 'BinaryExpression': // operator, left, right
+      const left = map_r(node.left);
+      const right = map_r(node.right);
+      return {id: get_id(), name: node.operator, children: [left, right]};
+    case 'CallExpression': // callee, arguments
+      const callee = map_r(node.callee);
+      const children = node.arguments.map(arg => map_r(arg));
+      return {id: get_id(), name: 'call', children: children};
+    default:
+      throw "map_r: unhandled node type " + node.type;
+    }
+  }
+
+  return map_r(root);
+}
+
+function ASTNode(props) {
+  return (<ul id={props.value.id}>
+          <div>{props.value.name}</div>
+          {props.value.children?
+           props.value.children.map((c,i) => <li key={i}><ASTNode value={c}/></li>)
+           : null
+          }
+    </ul>);
+}
+
+function ASTVisualize(props) {
+  var json = ast2json(props.ast);
+  console.log(JSON.stringify(props.ast, null, 2));
+  return <div className='ast'><ASTNode value={json}/></div>;
+  //return <code>{JSON.stringify(props.ast, null, 2)}</code>;
+}
 
 function Tree(props) {
   var rows = [];
@@ -8,18 +55,12 @@ function Tree(props) {
     var msg = props.message[i];
     var res = [];
 
-    if (msg.loc) {
-      res.push(<span key={0}>{msg.loc.filepath}@{msg.loc.beg_lin}:{msg.loc.beg_col}-{msg.loc.end_lin}:{msg.loc.end_col}</span>);
-      res.push(<br/>);
-    }
-    if (msg.msgtext) {
-      res.push(<code key={1}>{msg.msgtext.msgtext}</code>);
-      if (msg.msgtext.ast) {
-        res.push(<code key={2}>{JSON.stringify(msg.msgtext.ast, null, 2)}</code>);
-      }
-    }
-
-    rows.push(<div key={i}>{res}</div>);
+    rows.push(<div key={i}>
+              {msg.loc? <span>{msg.loc.filepath}@{msg.loc.beg_lin}:{msg.loc.beg_col}-{msg.loc.end_lin}:{msg.loc.end_col}</span> : null}
+              {msg.loc? <br/> : null}
+              {msg.msgtext && msg.msgtext.msgtext? <code>{msg.msgtext.msgtext}</code> : null}
+              {msg.msgtext && msg.msgtext.ast? <ASTVisualize ast={msg.msgtext.ast}/> : null}
+              </div>);
   }
   
   return <div>{rows}</div>;

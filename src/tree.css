@@ -1,0 +1,29 @@
+.ast ul {
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+  position: relative;
+}
+.ast li {
+  list-style-type: none;
+  border-left: 1px solid #000;
+  margin-left: 1em;
+}
+.ast li div {
+  padding-left: 1em;
+  position: relative;
+}
+.ast li div::before {
+  content:'';
+  position: absolute;
+  top: 0;
+  left: -1px;
+  bottom: 50%;
+  width: 0.75em;
+  border: 1px solid #000;
+  border-top: 0 none transparent;
+  border-right: 0 none transparent;
+}
+.ast ul > li:last-child {
+  border-left: 1px solid transparent;
+}

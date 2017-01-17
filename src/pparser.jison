@@ -22,7 +22,7 @@ file
   ;
 
 expression
-  : term  ',' expression { $$ = [$term,$expression]; }
+  : term  ',' expression { $$ = {type: 'BinaryExpression', operator: ',', left: $term, right: $expression}; }
   | term { $$ = $term; }
   ;
 term
