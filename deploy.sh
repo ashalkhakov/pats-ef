@@ -10,6 +10,8 @@ fi
 
 rev=$(git rev-parse --short HEAD)
 
+echo Initializing repo
+
 git init
 git config user.name "Artyom Shalkhakov"
 git config user.email "artyom.shalkhakov@gmail.com"
@@ -20,6 +22,10 @@ git reset upstream/gh-pages
 
 touch .
 
+echo Committing to GH Pages
+
 git add -A .
 git commit -m "rebuild pages at ${rev}"
 git push -q upstream HEAD:gh-pages
+
+echo Pushed to GH Pages
