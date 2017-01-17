@@ -154,6 +154,4 @@ function parseit(code) {
   }
 }
 
-module.exports = {
-  parse: parseit
-};
+exports.parse = parseit;
