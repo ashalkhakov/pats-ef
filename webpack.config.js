@@ -5,10 +5,13 @@ var BUILD_DIR = path.resolve(__dirname, 'dist');
 var APP_DIR = path.resolve(__dirname, 'src');
 
 const config = {
-  entry: APP_DIR + '/index.jsx',
+  entry: {
+    app: [APP_DIR + '/index.jsx']
+  },
   output: {
     path: BUILD_DIR,
-    filename: 'bundle.js'
+    filename: 'bundle.js',
+    publicPath: "/dist/"
   },
   node: {
     fs: "empty"

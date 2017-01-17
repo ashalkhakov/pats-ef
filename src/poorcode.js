@@ -20,7 +20,6 @@ function check_re1(rexp) {
 }
 
 function parseit(code) {
-  console.log(code);
 
   var lines = code.split("\n");
   var lines_out = [];
@@ -127,10 +126,10 @@ function parseit(code) {
         lines_out.push(line);
       }
     }
-    return JSON.stringify(lines_out, null, 4);
+    return lines_out;
   }
   catch (e) {
-    return e.message;
+    return [{type: 'exception', message: e.message}];
   }
 }
 
