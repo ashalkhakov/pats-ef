@@ -1,58 +1,10 @@
 import React from 'react';
 import {render} from 'react-dom';
 import poorcode from './poorcode.js';
+import SyntaxTree from './syntaxtree.jsx';
+import { PageHeader, ListGroup, ListGroupItem, FormGroup, FormControl, ControlLabel } from 'react-bootstrap';
 
-import css from './tree.css';
-
-function ast2json(root) {
-  var id = 0;
-  function get_id() {
-    return id++;
-  }
-
-  function map_r(node) {
-    switch (node.type) {
-    case 'NumericLiteral': // value
-      return {id: get_id(), name: node.value.toString()};
-    case 'Identifier': // name
-      return {id: get_id(), name: node.name};
-    case 'BinaryExpression': // operator, left, right
-      const left = map_r(node.left);
-      const right = map_r(node.right);
-      return {id: get_id(), name: node.operator, children: [left, right]};
-    case 'ArrayExpression': // elements
-      const chld = node.elements.map(arg => map_r(arg));
-      return {id: get_id(), name: 'array', children: chld};
-    case 'CallExpression': // callee, arguments
-      const callee = map_r(node.callee);
-      var children = node.arguments.map(arg => map_r(arg));
-      return {id: get_id(), name: callee.name, children: children};
-    default:
-      throw "map_r: unhandled node type " + node.type;
-    }
-  }
-
-  return map_r(root);
-}
-
-function ASTNode(props) {
-  return (<ul id={props.value.id}>
-          <div>{props.value.name}</div>
-          {props.value.children?
-           props.value.children.map((c,i) => <li key={i}><ASTNode value={c}/></li>)
-           : null
-          }
-    </ul>);
-}
-
-function ASTVisualize(props) {
-  var json = ast2json(props.ast);
-  console.log(JSON.stringify(props.ast, null, 2));
-  return <div className='ast'><ASTNode value={json}/></div>;
-  //return <code>{JSON.stringify(props.ast, null, 2)}</code>;
-}
-
-function Tree(props) {
+function MessageList(props) {
   var rows = [];
   for (var i = 0; i < props.message.length; i++) {
     var msg = props.message[i];
@@ -68,7 +20,7 @@ function Tree(props) {
       elt = <code>{msg.message}</code>;
       break;
     case 'AST':
-      elt = <ASTVisualize ast={msg.children}/>;
+      elt = <SyntaxTree ast={msg.children}/>;
       break;
     case 'Location':
       elt = <p>{msg.loc.filepath}@{msg.loc.beg_lin}:{msg.loc.beg_col}-{msg.loc.end_lin}:{msg.loc.end_col}
@@ -81,10 +33,10 @@ function Tree(props) {
       throw 'Unknown msg type ' + msg.type;
     }
 
-    rows.push(<div key={i}>{elt}</div>);
+    rows.push(<ListGroupItem key={i}>{elt}</ListGroupItem>);
   }
   
-  return <div>{rows}</div>;
+  return <ListGroup>{rows}</ListGroup>;
 }
 
 class App extends React.Component {
@@ -104,15 +56,17 @@ class App extends React.Component {
   
   render () {
     return <div>
-      <label>
-      Error from <code>patsopt</code>:
-      </label>
+      <PageHeader>Paste your ATS error message! <small>And have it converted to something hopefully more digestable</small></PageHeader>
 
-      <textarea cols="80" rows="30" value={this.state.code} onChange={this.handleChange}/>
-      <br/>
-      
-      <label>Result:</label>
-      <Tree message={this.state.message}/>
+      <form>
+      <FormGroup controlId="formControlsTextarea">
+      <ControlLabel>Error message:</ControlLabel>
+      <FormControl style={{ height: 200 }} componentClass="textarea" placeholder="Error message..." value={this.state.code} onChange={this.handleChange} />
+      </FormGroup>
+      </form>
+    
+      <h2>Results:</h2>
+      <MessageList message={this.state.message}/>
     </div>    
   }
 }
